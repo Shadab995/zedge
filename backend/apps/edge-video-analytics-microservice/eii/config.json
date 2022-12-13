@@ -1,0 +1,41 @@
+{
+    "config": {
+        "cert_type": ["zmq"],
+        "source": "gstreamer",
+        "source_parameters": {
+            "type": "uri",
+            "uri": "https://github.com/intel-iot-devkit/sample-videos/raw/master/classroom.mp4"
+        },
+        "pipeline": "object_detection",
+        "pipeline_version": "person_vehicle_bike",
+        "publish_frame": true,
+        "model_parameters": {}
+    },
+    "interfaces": {
+        "Publishers": [
+            {
+                "Name": "default",
+                "Type": "zmq_tcp",
+                "EndPoint": "0.0.0.0:65114",
+                "Topics": [
+                    "edge_video_analytics_results"
+                ],
+                "AllowedClients": [
+                    "*"
+                ]
+            }
+        ],
+        "Subscribers": [
+            {
+                "Name": "default",
+                "Type": "zmq_ipc",
+                "EndPoint": "/EII/sockets",
+                "PublisherAppName": "VideoIngestion",
+                "Topics": [
+                    "camera1_stream"
+                ],
+                "zmq_recv_hwm": 50
+            }
+        ]
+    }
+}
